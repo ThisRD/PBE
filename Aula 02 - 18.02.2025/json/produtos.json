@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "Nome": "Calçola Paraná",
+        "Valor": 30.00
+    },
+    {
+        "id": 2,
+        "Nome": "Pasta de Dente Pedra Branca",
+        "Valor": 5.00
+    },
+    {
+        "id": 3,
+        "Nome": "Café Delícia",
+        "Valor": 1000.00
+    },
+    {
+        "id": 7899984561439,
+        "Nome": "Caixa vazia do cubo mágico",
+        "Valor": 1000.00
+    },
+    {
+        "id": 2049505154700,
+        "Nome": "Fone Altomex a 908 ty",
+        "Valor": 38.90
+    }
+]
