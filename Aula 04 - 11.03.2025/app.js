@@ -14,6 +14,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', userController.getAllUsers);
 app.get('/add', (req, res) => res.render('add'));
 app.post('/add', userController.addUser);
+app.get('/edit/:id', userController.getUserById);
+app.post('/edit/:id', userController.updateUser);
+app.get('/dell/:id', userController.getdeleteByUser);
+app.post('/dell/:id', userController.deleteUser);
+app.get('/login/', (req,res) => res.render('login', {loginFalhou: false}));
+app.post('/login/', userController.loginUser);
 
 // Iniciar o servidor
 app.listen(port, () => {

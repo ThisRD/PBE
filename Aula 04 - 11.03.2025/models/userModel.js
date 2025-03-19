@@ -14,7 +14,7 @@ const User = {
         });
     },
 
-// Adicionar um novo usuário
+    // Adicionar um novo usuário
     addUser: (data, callback) => {
         const sql = 'INSERT INTO users SET ?';
         db.query(sql, data, (err, result) => {
@@ -22,6 +22,42 @@ const User = {
             callback(result);
         });
     },
+
+    getUserById: (id, callback) => {
+        const sql = 'SELECT * FROM users WHERE id = ?';
+        db.query(sql, [id], (err, result) => {
+            if (err) throw err;
+            // console.log("model:getUserById","result = ",result)
+            callback(result[0]);
+        });
+    },
+
+    updateUser: (id,data, callback) => {
+        const sql = 'UPDATE users SET ? WHERE ID = ?';
+        db.query(sql, [data, id], (err, result) => {
+            if (err) throw err;
+            callback(result);
+        });
+    },
+
+    deleteUser: (id, callback) => {
+        const sql = 'DELETE FROM users WHERE id = ?';
+        db.query(sql, [id], (err, result) => {
+            if (err) throw err;
+            callback(result);
+        });
+    },
+
+    getUserNyUsername: (username, callback) => {
+        const sql = 'SELECT * FROM users WHERE name = ?';
+        db.query(sql, [username], (err, result) => {
+            if(err) throw err;
+            callback(result[0])
+        });
+    },
+    
 };
+
+
 
 module.exports = User;
