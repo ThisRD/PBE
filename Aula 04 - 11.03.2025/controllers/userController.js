@@ -1,4 +1,4 @@
-const User = require('../models/userModel');
+const User = require('../models/userModel.js');
 // Esta linha exporta a função para que ela possa ser usada em outras partes do aplicativo
 exports.getAllUsers = (req, res) => {
     // esta linha chama uma função
@@ -33,7 +33,7 @@ exports.addUser = (req, res) => {
         pass: req.body.pass
     };
     User.addUser(newUser, () => {
-        res.redirect('/');
+        res.redirect('/index');
     });
 };
 
@@ -48,25 +48,42 @@ exports.updateUser = (req, res) => {
         pass: req.body.pass
     };
     User.updateUser(userId, updateUser, () => {
-        res.redirect('/');
+        res.redirect('/index');
     });
 };
 
 exports.deleteUser = (req, res) => {
     const userId = req.params.id;
     User.deleteUser(userId, () => {
-        res.redirect('/');
+        res.redirect('/index');
     });
 };
 
-exports.loginUser = async (req,res) => {
-    const { username, password } = req.body;
-    console.log("loginUser", username, password)
-    User.getUserByUsername(username, (user) => {
-        if (user && user.pass === password) {
-            res.redirect('/')
-        }else {
-            res.render('login', {loginFalhou : true})
+exports.userLogin = (req, res) => {
+    console.log('metodo: ', req.method)
+    console.log('corpo de requisição:', req.body);
+    console.log('controller', "userLogin");
+    if(req.method === 'GET'){
+        res.render('login', { loginFalhou:false });
+    };
+    if(req.method === 'POST'){
+        const {name, pass} = req.body;
+
+        if(!name || !pass){
+            res.redirect({loginFalhou:true});
         }
-    });
+
+        User.getUserByName(name, (user) => {
+            console.log('username encontrado:', user);
+            if(!user){
+                res.redirect('/', {loginFalhou:true})
+            }
+            if(pass == user.pass){
+                res.redirect('/index');
+            }else{
+                res.redirect('/', {loginFalhou:true});
+            }
+        })
+    }
+
 }
