@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extend: false }));
 // rotas da aplicação 
 // app.[cerbo http](rota, função callback)
 app.get('/', relatorioController.getAllUsers);
-app.get('/relatorio/pdf', relatorioController.generatePDF);
+app.post('/relatorio/pdf', relatorioController.generatePDF);
 
 // inicia o servidor na porta 2000
 app.listen(2000, () => {

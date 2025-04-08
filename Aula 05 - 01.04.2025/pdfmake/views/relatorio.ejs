@@ -12,20 +12,21 @@
 <body>
     <div class="container mt-4">
         <h1 class="text-center mb-4">Relatório de Clientes</h1>
-        <a href="relatorio/pdf">Gerar - PDF</a>
+        <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#gerarpdf">GERAR
+            PDF</button>
+
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
                     <th>NOME</th>
                     <th>E-MAIL</th>
-                    <th>TELEFONE</th>
-                    <th>ENDEREÇO</th>
-                    <th>USERNAME</th>
+                    <th>DATA NASCIENTO</th>
+
                 </tr>
             </thead>
             <tbody>
-                <% users.forEach(dado => { %>
+                <% users.forEach(dado=> { %>
                     <tr>
                         <td>
                             <%= dado.id %>
@@ -37,13 +38,7 @@
                             <%= dado.email %>
                         </td>
                         <td>
-                            <%= dado.fone %>
-                        </td>
-                        <td>
-                            <%= dado.endereco %>
-                        </td>
-                        <td>
-                            <%= dado.username %>
+                            <%= new Date(dado.dtnasc).toLocaleDateString('pt-BR') %>
                         </td>
                     </tr>
                     <% }); %>
@@ -55,6 +50,36 @@
             </p>
         </div>
     </div>
+    <!-- inicio do modal geração de PDF -->
+    <!-- Modal -->
+    <div class="modal fade" id="gerarpdf" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">GERAR PDF</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="relatorio/pdf" method="post">
+                    <div class="modal-body">
+                        <label for="data_inicio" class="form-label">Data Inicial</label>
+                        <input type="datetime-local" class="form-control" id="data_inicio" name="data_inicio">
+                        <label for="data_final" class="form-label">Data Final</label>
+                        <input type="datetime-local" class="form-control" id="data_final" name="data_final">
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Gerar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- fim do modal geração de pdf -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
 </body>
+
 
 </html>

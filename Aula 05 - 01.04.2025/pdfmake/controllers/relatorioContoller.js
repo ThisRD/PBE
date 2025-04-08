@@ -6,7 +6,7 @@ exports.getAllUsers = (req, res) => {
 
     // neste ponto se chama users9 será devolvido pelo banco no futuro)
 
-    User.getAllUsers((users) => {
+    User.getAllUsers('', '', (users) => {
         res.render('relatorio', { users })
     })
 };
@@ -33,10 +33,10 @@ async function relatorioPDF(users){
             {
                 table: {
                     headerRows: 1,
-                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+                    widths: ['auto', 'auto', 'auto', '*'],
                     body: [
-                        ['ID', 'Nome', 'Email', 'Telefone', 'Endereço', 'Username'],
-                        ...users.map(user => [user.id, user.name, user.email, user.fone, user.endereco, user.username]),
+                        ['ID', 'Nome', 'Email', 'Nascimento'],
+                        ...users.map(user => [user.id, user.name, user.email, new Date(user.dtnasc).toLocaleDateString('pt-BR')]),
                     ],
                 },
             },
@@ -63,8 +63,16 @@ async function relatorioPDF(users){
 
 exports.generatePDF = (req, res) => {
     console.log('relatorioController', 'generatePDF')
+    console.log('dados', req.body)
 
-    User.getAllUsers((users) => {
+    User.getAllUsers(
+        
+        new Date(req.body.data_inicio).toLocaleDateString('en-CA'),
+        new Date(req.body.data_final).toLocaleDateString('en-CA'),
+        
+        (users) => {
+       
+
         relatorioPDF(users).then(pdfBuffer => {
             res.setHeader('Content-Type', 'application/pdf');
             res.setHeader('Content-Disposition', 'attachment; filename=relatorio.pdf');
