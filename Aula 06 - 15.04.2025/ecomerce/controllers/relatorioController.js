@@ -1,16 +1,17 @@
 const Produto = require('../models/relatorioModel');
 const PdfPrinter = require('pdfmake');
 
-exports.getAllUsers = (req, res) => {
+
+exports.getAllProducts = (req, res) => {
     console.log('relatorioController', 'getAllUsers')
 
     // neste ponto se chama users9 será devolvido pelo banco no futuro)
 
-    Produto.getAllUsers((produto) => {
+    Produto.getAllProducts((produto) => {
         res.render('relatorio', { produto })
     })
 };
-exports.addUser = (req, res) => {
+exports.addProduct = (req, res) => {
     const newProduct = {
         nome: req.body.nome,
         descricao: req.body.descricao,
@@ -20,13 +21,13 @@ exports.addUser = (req, res) => {
         precovenda: req.body.precovenda,
         estoque: req.body.estoque,
     };
-    Produto.addUser(newProduct, () => {
+    Produto.addProduct(newProduct, () => {
         res.redirect('/');
     });
 };
 
 
-async function relatorioPDF(produto){
+async function relatorioPDF(produto) {
     console.log('relatorioController', 'criarPDF()', produto);
 
     // configuração das fontes do PDF
@@ -109,17 +110,18 @@ exports.generatePDF = (req, res) => {
     console.log('relatorioController', 'generatePDF')
     console.log('dados', req.body)
 
-    Produto.getAllUsers(
-        
+    Produto.getAllProducts(
+
         (produto) => {
-       
 
-        relatorioPDF(produto).then(pdfBuffer => {
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', 'attachment; filename=relatorio.pdf');
-            res.send(pdfBuffer);
 
+            relatorioPDF(produto).then(pdfBuffer => {
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', 'attachment; filename=relatorio.pdf');
+                res.send(pdfBuffer);
+
+            })
         })
-    })
 
 }
+

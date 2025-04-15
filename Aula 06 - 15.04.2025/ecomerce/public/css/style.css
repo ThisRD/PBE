@@ -1,0 +1,23 @@
+.modal-fullscreen .modal-content {
+    width: 150px;
+    height: 100%;
+}
+
+.modal.fade .modal-dialog{
+    transform: translateX(-100%);
+    transition: transform 0.1s ease-out, opacity 0.3 ease-out;
+}
+
+.modal.show .modal-dialog{
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.nav-link:hover{
+    color: blue !important;
+}
+
+.modal-custom {
+    max-width: 500px; /* Define a largura máxima da modal */
+    margin: 1.75rem auto; /* Centraliza a modal */
+}
