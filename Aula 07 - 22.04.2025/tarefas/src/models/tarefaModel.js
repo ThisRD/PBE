@@ -54,7 +54,7 @@ const { conectarMongoDB } = require('../database/db');
 // };
 
 // module.exports = Tarefa
-class TarefaModel {
+class tarefaModel {
     // static tarefas = [
     //     {
     //         id: 1,
@@ -92,25 +92,18 @@ class TarefaModel {
     //metodos
     static async listar() {
         console.log('TarefaModel','listar()')
-
-
         await this.conectar();
         const tarefas = this.tarefasCollection.find().toArray();
-
-
         return tarefas
-
-
     }
 
 
-    static adicionar(novaTarefa) {
-        console.log('TarefaModel', 'adicionar()', 'tarefa:', tarefa)
+    static async adicionar(novaTarefa) {
+        console.log('TarefaModel', 'adicionar()', 'tarefa:', novaTarefa)
 
-        novaTarefa.id = this.tarefas.lenght + 1;
-        this.tarefas.push(novaTarefa);
-        res.status(201).json(novaTarefa);
-
+        await this.conectar();
+        const resultado = await this.tarefasCollection.insertOne(novaTarefa);
+        return resultado
     }
 
 
@@ -161,4 +154,4 @@ class TarefaModel {
 }
 
 
-module.exports = TarefaModel 
+module.exports = tarefaModel 

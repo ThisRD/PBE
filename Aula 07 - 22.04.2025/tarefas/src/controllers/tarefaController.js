@@ -113,10 +113,16 @@ exports.listarTodas = (req,res)=>{
 
 
 exports.adicionarTarefa = (req, res) => {
-    const novaTarefa = req.body;
-    novaTarefa.id = tarefas.length + 1;
-    tarefas.push(novaTarefa);
-    res.status(201).json(novaTarefa);
+    let novaTarefa = req.body;
+    tarefaModel.adicionar(novaTarefa)
+        .then((resultado) => {
+           console.log('resultado:', resultado);
+            res.status(201).json(resultado);
+        })
+        .catch((erro) => {
+            console.log('erro:', erro);
+            res.status(500).json({ mensagem: "Erro ao adicionar tarefa" });
+        });
 };
 
 exports.atualizarTarefas = (req, res) => {
